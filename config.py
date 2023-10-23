@@ -1,5 +1,5 @@
 from libqtile import bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Match, Screen
 from libqtile.lazy import lazy
 
 
@@ -7,32 +7,6 @@ from keys import *
 from shortcuts import shortcuts
 
 
-
-
-
-groups = [Group(i) for i in "1234567890"]
-
-for i in groups:
-    shortcuts.extend([
-        # mod1 + letter of group = switch to group
-        Key(
-            [SUPER],
-            i.name,
-            lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name),
-        ),
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key(
-            [SUPER, SHIFT],
-            i.name,
-            lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name),
-        ),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        #     desc="move focused window to group {}".format(i.name)),
-    ])
 
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),

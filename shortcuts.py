@@ -1,7 +1,7 @@
 from keys import *
 
 from libqtile.lazy import lazy
-from libqtile.config import Key
+from libqtile.config import Key, Group
 from programs import terminal
 
 from typing import List
@@ -58,3 +58,28 @@ shortcuts.extend([
     Key([SUPER, CTRL], K_q, lazy.shutdown(), desc="Shutdown Qtile"),
     Key([SUPER], K_r, lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 ])
+
+
+groups = [Group(i) for i in "1234567890"]
+
+for i in groups:
+    shortcuts.extend([
+        # mod1 + letter of group = switch to group
+        Key(
+            [SUPER],
+            i.name,
+            lazy.group[i.name].toscreen(),
+            desc="Switch to group {}".format(i.name),
+        ),
+        # mod1 + shift + letter of group = switch to & move focused window to group
+        Key(
+            [SUPER, SHIFT],
+            i.name,
+            lazy.window.togroup(i.name, switch_group=True),
+            desc="Switch to & move focused window to group {}".format(i.name),
+        ),
+        # Or, use below if you prefer not to switch to that group.
+        # # mod1 + shift + letter of group = move focused window to group
+        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+        #     desc="move focused window to group {}".format(i.name)),
+    ])
