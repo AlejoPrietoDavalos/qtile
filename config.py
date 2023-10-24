@@ -1,5 +1,5 @@
 from libqtile import layout
-from libqtile.config import Click, Group, Drag, Match
+from libqtile.config import Click, Drag, Match
 from libqtile.lazy import lazy
 
 
@@ -7,8 +7,19 @@ from buttons import *
 from shortcuts import get_keys
 from screens import get_widgets, get_screen
 from layouts import get_layouts
+from groups import get_groups
+import os
 
-groups = [Group(i) for i in "1234567890"]
+os.system("xrandr --output DP-5 --right-of HDMI-0")
+
+
+desktops = [
+    ["1", "2", "3", "4", "5"],
+    ["6", "7", "8", "9", "0"]
+]
+
+groups = get_groups(desktops)
+
 keys = get_keys(groups)
 
 layouts = get_layouts()
@@ -23,10 +34,8 @@ extension_defaults = widget_defaults.copy()
 my_widgets_1 = get_widgets()
 my_widgets_2 = get_widgets()
 
-screens = [
-    get_screen(my_widgets_1),
-    get_screen(my_widgets_2)
-]
+s_1, s_2 = get_screen(my_widgets_1, 0), get_screen(my_widgets_2, 1)
+screens = [s_2, s_1]
 
 
 # Drag floating layouts.
@@ -39,9 +48,10 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
-floats_kept_above = True
+floats_kept_above = True        # Si es True, las ventanas flotantes se mantendrán por encima de otras ventanas. Si es False, no se garantiza su posición.
+
 cursor_warp = False
 floating_layout = layout.Floating(
     float_rules = [
@@ -99,4 +109,4 @@ path_wallpapers = path_images / "wallpapers"
 asd = [p for p in path_wallpapers.iterdir()]
 
 r = random.choice(asd)
-os.system(f"feh --bg-fill {random.choice(asd)}")
+#os.system(f"feh --bg-fill {random.choice(asd)}")

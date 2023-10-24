@@ -15,39 +15,51 @@ def KP_num(num: str) -> str:
     return f"KP_{num}"
 
 
-
-def focus_window_num(name: str, num: str) -> Keys:
-    return [
-        # mod1 + letter of group = switch to group
-        Key([SUPER], name, lazy.group[num].toscreen(), desc="Switch to group {}".format(num)),
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        #Key([SUPER, SHIFT], name, lazy.window.togroup(num, switch_group=True), desc="Switch to & move focused window to group {}".format(num)),
-        # Or, use below if you prefer not to switch to that group.
-        # mod1 + shift + letter of group = move focused window to group
-        #Key([SUPER, SHIFT], name, lazy.window.togroup(num), desc="move focused window to group {}".format(num))
-    ]
-
+class FocusWindow:
+    @staticmethod
+    def with_num(name: str, num: str) -> Keys:
+        return [
+            # mod1 + letter of group = switch to group
+            Key([SUPER], name, lazy.group[num].toscreen(), desc="Switch to group {}".format(num)),
+            # mod1 + shift + letter of group = switch to & move focused window to group
+            #Key([SUPER, SHIFT], name, lazy.window.togroup(num, switch_group=True), desc="Switch to & move focused window to group {}".format(num)),
+            # Or, use below if you prefer not to switch to that group.
+            # mod1 + shift + letter of group = move focused window to group
+            #Key([SUPER, SHIFT], name, lazy.window.togroup(num), desc="move focused window to group {}".format(num))
+        ]
+    
+    @staticmethod
+    def with_arrows() -> Keys:
+        return [
+            Key([SUPER], LEFT,  lazy.layout.left(), desc="Move focus to left"),
+            Key([SUPER], RIGHT, lazy.layout.right(),desc="Move focus to right"),
+            Key([SUPER], DOWN,  lazy.layout.down(), desc="Move focus down"),
+            Key([SUPER], UP,    lazy.layout.up(),   desc="Move focus up"),
+            #Key([SUPER], SPACE, lazy.layout.next(), desc="Move window focus to other window"),
+        ]
 
 
 def focus_window(groups: List[Group]) -> Keys:
-    keys = [
-        Key([SUPER], LEFT,  lazy.layout.left(), desc="Move focus to left"),
-        Key([SUPER], RIGHT, lazy.layout.right(),desc="Move focus to right"),
-        Key([SUPER], DOWN,  lazy.layout.down(), desc="Move focus down"),
-        Key([SUPER], UP,    lazy.layout.up(),   desc="Move focus up"),
-        #Key([SUPER], SPACE, lazy.layout.next(), desc="Move window focus to other window"),
-    ]
+    keys: Keys = []
+    keys.extend(FocusWindow.with_arrows())
 
     for group in groups:
         i = group.name
         KP_i = KP_num(i)
 
-        keys.extend(focus_window_num(i, i))
-        #keys.extend(focus_window_num(KP_i, i))
+        keys.extend(FocusWindow.with_num(i, i))
+        keys.extend(FocusWindow.with_num(KP_i, i))
     return keys
 
 
-
+def flip_window() -> Keys:
+    """ FIXME: No quiero que cambie la forma de la ventana."""
+    return [
+        Key([SUPER, CTRL], LEFT,  lazy.layout.shuffle_left(), desc="Move window to the left"),
+        Key([SUPER, CTRL], RIGHT, lazy.layout.shuffle_right(),desc="Move window to the right"),
+        Key([SUPER, CTRL], DOWN,  lazy.layout.shuffle_down(), desc="Move window down"),
+        Key([SUPER, CTRL], UP,    lazy.layout.shuffle_up(),   desc="Move window up")
+    ]
 
 def get_keys(groups: Groups) -> Keys:
     """ A list of available commands that can be bound to keys can be found
@@ -56,13 +68,10 @@ def get_keys(groups: Groups) -> Keys:
     """
     keys: Keys = []
     keys.extend(focus_window(groups))
+    keys.extend(flip_window())
     keys.extend([
         # Move windows between left/right columns or move up/down in current stack.
         # Moving out of range in Columns layout will create new column.
-        Key([SUPER, SHIFT], LEFT,  lazy.layout.shuffle_left(), desc="Move window to the left"),
-        Key([SUPER, SHIFT], RIGHT, lazy.layout.shuffle_right(),desc="Move window to the right"),
-        Key([SUPER, SHIFT], DOWN,  lazy.layout.shuffle_down(), desc="Move window down"),
-        Key([SUPER, SHIFT], UP,    lazy.layout.shuffle_up(),   desc="Move window up"),
 
         # Grow windows. If current window is on the edge of screen and direction
         # will be to screen edge - window would shrink.
@@ -84,7 +93,7 @@ def get_keys(groups: Groups) -> Keys:
         Key([SUPER], K_w, lazy.window.kill(), desc="Kill focused window"),
         Key([SUPER], K_f, lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window"),
         Key([SUPER], K_t, lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
-        Key([SUPER, CTRL], K_r, lazy.reload_config(), desc="Reload the config"),
+        Key([SUPER, ALT], K_r, lazy.reload_config(), desc="Reload the config"),
         Key([SUPER, CTRL], K_q, lazy.shutdown(), desc="Shutdown Qtile"),
         Key([SUPER], K_r, lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     ])
