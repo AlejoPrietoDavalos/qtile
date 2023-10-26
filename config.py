@@ -10,6 +10,11 @@ from layouts import get_layouts
 from groups import get_groups
 import os
 
+from libqtile import hook
+
+
+
+
 os.system("xrandr --output DP-5 --right-of HDMI-0")
 
 
@@ -19,6 +24,22 @@ desktops = [
 ]
 
 groups = get_groups(desktops)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 keys = get_keys(groups)
 
