@@ -2,7 +2,7 @@
 from pathlib import Path
 
 path_root = Path.home() / ".config" / "qtile"
-path_themes_folder = Path("themes")
+path_themes_folder = path_root / "themes"
 
 # Crear los folders en caso de haberse borrado.
 for _p in [path_themes_folder]:
