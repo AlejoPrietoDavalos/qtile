@@ -4,7 +4,8 @@ from typing import List
 
 def get_groups(desktops: List[List[str]]) -> List[Group]:
     groups: List[Group] = []
-    for desktop in desktops:
+    for n_screen, desktop in enumerate(desktops):
         for i in desktop:
-            groups.append(Group(i))
+            group = Group(i)#, screen_affinity=n_screen)
+            groups.append(group)
     return groups

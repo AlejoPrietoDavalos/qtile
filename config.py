@@ -2,15 +2,14 @@ from libqtile import layout
 from libqtile.config import Click, Drag, Match
 from libqtile.lazy import lazy
 
-
-from buttons import *
-from shortcuts import get_keys
-from screens import get_widgets, get_screen
-from layouts import get_layouts
-from groups import get_groups
 import os
 
-from libqtile import hook
+from settings.buttons import *
+from settings.shortcuts import get_keys
+from settings.widgets import get_widgets
+from settings.screens import get_screen, ConfigScreen, ConfigBar
+from settings.layouts import get_layouts
+from settings.groups import get_groups
 
 
 
@@ -46,17 +45,29 @@ keys = get_keys(groups)
 layouts = get_layouts()
 
 widget_defaults = dict(
-    font = "Hack Nerd Font",
-    fontsize = 12,
+    font = "HackNerdFont bold",
+    fontsize = 15,
     padding = 10,
 )
 extension_defaults = widget_defaults.copy()
 
-my_widgets_1 = get_widgets()
-my_widgets_2 = get_widgets()
 
-s_1, s_2 = get_screen(my_widgets_1, 0), get_screen(my_widgets_2, 1)
-screens = [s_2, s_1]
+
+cfg_screen = ConfigScreen(
+    wallpaper_mode = "fill",
+    x11_drag_polling_rate = 60
+)
+cfg_bar = ConfigBar(
+    size = 24,
+    border_width = [2, 0, 2, 0],        # Draw top and bottom borders
+    #border_color = ["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+)
+widgets_1 = get_widgets()
+widgets_2 = get_widgets()
+screens = [
+    get_screen(widgets_1, cfg_screen, cfg_bar),
+    get_screen(widgets_2, cfg_screen, cfg_bar)
+]
 
 
 # Drag floating layouts.

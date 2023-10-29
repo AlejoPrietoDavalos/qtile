@@ -1,8 +1,8 @@
-from buttons import *
+from settings.buttons import *
+from settings.programs import terminal
 
 from libqtile.lazy import lazy
 from libqtile.config import Key, Group
-from programs import terminal
 
 from typing import List, NewType
 
