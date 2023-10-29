@@ -1,4 +1,11 @@
+from __future__ import annotations
+
+from settings._paths import get_path_theme
+
+from pathlib import Path
 from pydantic import BaseModel
+import json
+
 
 class ConfigScreen(BaseModel):
     wallpaper_mode: str     # TODO: Ver cuales son las opciones.
@@ -32,12 +39,29 @@ class ConfigGroupBox(BaseModel):
 
 
 
-class ConfigQTILE(BaseModel):
+
+class _ConfigTheme(BaseModel):
+    theme_name: str
+
+    @property
+    def path_theme(self) -> Path:
+        # FIXME: Ver la mejor forma de validar esto.
+        return get_path_theme(self.theme_name)
+
+    @staticmethod
+    def load_theme(theme_name: str) -> ConfigQTILE:
+        path_theme = get_path_theme(theme_name)
+        with open(path_theme, "r") as f:
+            return ConfigQTILE(**json.load(f))
+
+    def save_theme(self) -> None:
+        # TODO: Si existe preguntar si se quiere reemplazar. force=True
+        with open(self.path_theme, "w") as f:
+            json.dump(self.model_dump(), f)
+
+
+class ConfigQTILE(_ConfigTheme):
     bar: ConfigBar
     screen: ConfigScreen
     groupbox: ConfigGroupBox
-    
-    # def load_theme():
-    #     pass
-    # def save_theme():
-    #     pass
+

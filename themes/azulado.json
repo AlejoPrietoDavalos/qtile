@@ -1,0 +1,1 @@
+{"theme_name": "azulado", "bar": {"background": "#155D80", "size": 24, "border_width": [2, 0, 2, 0]}, "screen": {"wallpaper_mode": "fill", "x11_drag_polling_rate": 60}, "groupbox": {"active": "#6EC8F5", "inactive": "#167AA3", "margin_y": 3, "margin_x": 0, "borderwidth": 3, "highlight_method": "block"}}

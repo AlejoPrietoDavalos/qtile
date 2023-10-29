@@ -4,47 +4,21 @@ from libqtile.lazy import lazy
 
 import os
 
+from settings.config_qtile import ConfigQTILE
 from settings.buttons import *
 from settings.shortcuts import get_keys
 from settings.widgets import get_widgets
 from settings.screens import get_screen
 from settings.layouts import get_layouts
 from settings.groups import get_groups
-from settings.colors import ColorBar    # FIXME
-from settings.config_qtile import (
-    ConfigQTILE,
-    ConfigScreen,
-    ConfigBar,
-    ConfigGroupBox
-)
 
 
-cfg = ConfigQTILE(
-    bar = ConfigBar(
-        background = ColorBar.background,
-        size = 24,
-        border_width = [2, 0, 2, 0],        # Draw top and bottom borders
-    ),
-    screen = ConfigScreen(
-        wallpaper_mode = "fill",
-        x11_drag_polling_rate = 60
-    ),
-    groupbox = ConfigGroupBox(
-        active = ColorBar.letter_normal,
-        inactive = ColorBar.letter_inactive,
-        margin_y = 3,
-        margin_x = 0,
-        borderwidth = 3,
-        highlight_method = "block",   #line
-    )
-)
+# Ver `theme_creator.ipynb`.
+cfg = ConfigQTILE.load_theme(theme_name="azulado")
 
 
 
-
-
-
-
+# FIXME: Arreglar este hardcoding.
 os.system("xrandr --output DP-5 --right-of HDMI-0")
 
 
