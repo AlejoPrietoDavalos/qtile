@@ -7,9 +7,40 @@ import os
 from settings.buttons import *
 from settings.shortcuts import get_keys
 from settings.widgets import get_widgets
-from settings.screens import get_screen, ConfigScreen, ConfigBar
+from settings.screens import get_screen
 from settings.layouts import get_layouts
 from settings.groups import get_groups
+from settings.colors import ColorBar    # FIXME
+from settings.config_qtile import (
+    ConfigQTILE,
+    ConfigScreen,
+    ConfigBar,
+    ConfigGroupBox
+)
+
+
+cfg = ConfigQTILE(
+    bar = ConfigBar(
+        background = ColorBar.background,
+        size = 24,
+        border_width = [2, 0, 2, 0],        # Draw top and bottom borders
+    ),
+    screen = ConfigScreen(
+        wallpaper_mode = "fill",
+        x11_drag_polling_rate = 60
+    ),
+    groupbox = ConfigGroupBox(
+        active = ColorBar.letter_normal,
+        inactive = ColorBar.letter_inactive,
+        margin_y = 3,
+        margin_x = 0,
+        borderwidth = 3,
+        highlight_method = "block",   #line
+    )
+)
+
+
+
 
 
 
@@ -27,6 +58,13 @@ groups = get_groups(desktops)
 
 
 
+from libqtile.utils import guess_terminal
+from settings.programs import Programs
+programs = Programs(
+    terminal = guess_terminal(),
+    browser = "brave",
+    browser_incognito = "brave --incognito"
+)
 
 
 
@@ -37,10 +75,7 @@ groups = get_groups(desktops)
 
 
 
-
-
-
-keys = get_keys(groups)
+keys = get_keys(groups, programs)
 
 layouts = get_layouts()
 
@@ -53,21 +88,23 @@ extension_defaults = widget_defaults.copy()
 
 
 
-cfg_screen = ConfigScreen(
-    wallpaper_mode = "fill",
-    x11_drag_polling_rate = 60
-)
-cfg_bar = ConfigBar(
-    size = 24,
-    border_width = [2, 0, 2, 0],        # Draw top and bottom borders
-    #border_color = ["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-)
-widgets_1 = get_widgets()
-widgets_2 = get_widgets()
-screens = [
-    get_screen(widgets_1, cfg_screen, cfg_bar),
-    get_screen(widgets_2, cfg_screen, cfg_bar)
-]
+
+
+n_monitors = 2  # TODO: Ver como mejorar esto.
+widgets = [get_widgets(cfg) for _ in range(n_monitors)]
+screens = [get_screen(w, cfg) for w in widgets]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Drag floating layouts.
@@ -122,23 +159,23 @@ wmname = "LG3D"
 
 
 
-import random
-import os
-from pathlib import Path
-def set_wallpaper() -> None:
-    """ BUG: Se ejecuta 2 veces."""
-    path_home = Path.home()
-    path_images = path_home / "images"
-    path_wallpapers = path_images / "wallpapers"
-    asd = [p for p in path_wallpapers.iterdir()]
-    
-    r = random.choice(asd)
-    os.system(f"feh --bg-fill {random.choice(asd)}")
+#import random
+#import os
+#from pathlib import Path
+#def set_wallpaper() -> None:
+#    """ BUG: Se ejecuta 2 veces."""
+#    path_home = Path.home()
+#    path_images = path_home / "images"
+#    path_wallpapers = path_images / "wallpapers"
+#    asd = [p for p in path_wallpapers.iterdir()]
+#    
+#    r = random.choice(asd)
+#    os.system(f"feh --bg-fill {random.choice(asd)}")
 #set_wallpaper()
-path_home = Path.home()
-path_images = path_home / "images"
-path_wallpapers = path_images / "wallpapers"
-asd = [p for p in path_wallpapers.iterdir()]
+#path_home = Path.home()
+#path_images = path_home / "images"
+#path_wallpapers = path_images / "wallpapers"
+#asd = [p for p in path_wallpapers.iterdir()]
 
-r = random.choice(asd)
+#r = random.choice(asd)
 #os.system(f"feh --bg-fill {random.choice(asd)}")

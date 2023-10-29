@@ -1,25 +1,20 @@
+from settings.config_qtile import ConfigQTILE
+from settings.colors import ColorBar    # FIXME
+
 from libqtile import bar, widget
 
 def format_clock(format: str = None) -> str:
     return "%d/%m/%Y | %H:%M" if format is None else format
 
-
-def get_widgets():
+def get_widgets(cfg: ConfigQTILE):
     widgets = []
     widgets.extend([
         widget.Spacer(length=bar.STRETCH),
-        widget.GroupBox(
-            margin_y=3,
-            margin_x=0,
-            #padding_x=10,
-            borderwidth=3,
-            #rounded=True,
-            #highlight_method="line",
-        ),
+        widget.GroupBox(**cfg.groupbox.model_dump()),
         widget.Spacer(length=bar.STRETCH),
     ])
     widgets.extend([
-        widget.Clock(format=format_clock(), foreground="#20A4C8")
+        widget.Clock(format=format_clock(), foreground=ColorBar.letter_normal)
     ])
 
     widgets.extend([

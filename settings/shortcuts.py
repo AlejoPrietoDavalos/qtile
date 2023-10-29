@@ -1,5 +1,5 @@
 from settings.buttons import *
-from settings.programs import terminal
+from settings.programs import Programs
 
 from libqtile.lazy import lazy
 from libqtile.config import Key, Group
@@ -58,15 +58,17 @@ def resize_window() -> Keys:
     ]
 
 
-def run_apps() -> Keys:
+def run_programs(programs: Programs) -> Keys:
+    """ TODO: Algunos condicionales, quizás un programa puede ser un objeto de pydantic
+    que guarde además el nombre, como ejecutarlo y el shotcut que tiene asociado."""
     return [
-        Key([SUPER], RETURN, lazy.spawn(terminal)),
-        Key([SUPER, CTRL], RETURN, lazy.spawn("brave")),
-        Key([SUPER, CTRL, SHIFT], RETURN, lazy.spawn("brave --incognito"))
+        Key([SUPER], RETURN, lazy.spawn(programs.terminal)),
+        Key([SUPER, CTRL], RETURN, lazy.spawn(programs.browser)),
+        Key([SUPER, CTRL, SHIFT], RETURN, lazy.spawn(programs.browser_incognito))
     ]
 
 
-def get_keys(groups: Groups) -> Keys:
+def get_keys(groups: Groups, programs: Programs) -> Keys:
     """ A list of available commands that can be bound to keys can be found
     at https://docs.qtile.org/en/latest/manual/config/lazy.html
     Switch between windows
@@ -78,7 +80,7 @@ def get_keys(groups: Groups) -> Keys:
     #keys.extend(FocusWindow.with_num(KP_num(g.name), g.name) for g in groups)
     keys.extend(flip_window())
     keys.extend(resize_window())
-    keys.extend(run_apps())
+    keys.extend(run_programs(programs))
     keys.extend([
         # Toggle between different layouts as defined below
         #Key([SUPER], TAB, lazy.next_layout()),     # No sé que hace.

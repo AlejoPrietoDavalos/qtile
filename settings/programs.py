@@ -1,2 +1,9 @@
-from libqtile.utils import guess_terminal
-terminal = guess_terminal()
+from pydantic import BaseModel
+
+#class Program(BaseModel):
+
+
+class Programs(BaseModel):
+    terminal: str
+    browser: str
+    browser_incognito: str
