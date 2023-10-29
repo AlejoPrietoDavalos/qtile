@@ -1,4 +1,10 @@
-
+### Quickstart
+Clonar el repo en `~/.config`.
+```bash
+cd ~/.config
+git clone https://github.com/AlejoPrietoDavalos/qtile
+cd qtile
+```
 
 
 
