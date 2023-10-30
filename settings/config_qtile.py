@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from settings._paths import get_path_theme
+from settings._paths import path_themes_folder
 
 from pathlib import Path
 from pydantic import BaseModel
@@ -30,15 +30,18 @@ class ConfigGroupBox(BaseModel):
     borderwidth: int
     highlight_method: str
 
-#class FontConfig(BaseModel):
-#    font: str = "HackNerdFont"
-#    fontsize: int = 14
-#    padding: int = 10
+class ConfigFont(BaseModel):
+    font: str
+    fontsize: int
+    padding: int
 
 
 
 
-
+def get_path_theme(theme_name: str) -> Path:
+    """ FIXME: Hacer validacion del path y toda la pelota.
+    Arreglar el hardcodeo del .json"""
+    return path_themes_folder / f"{theme_name}.json"
 
 class _ConfigTheme(BaseModel):
     theme_name: str

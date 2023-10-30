@@ -4,13 +4,14 @@ from libqtile.lazy import lazy
 
 import os
 
-from settings.config_qtile import ConfigQTILE
+from settings.config_qtile import ConfigQTILE, ConfigFont
 from settings.buttons import *
 from settings.shortcuts import get_keys
 from settings.widgets import get_widgets
 from settings.screens import get_screen
 from settings.layouts import get_layouts
 from settings.groups import get_groups
+from settings.wallpaper import WallpaperManager
 
 
 # Ver `theme_creator.ipynb`.
@@ -20,7 +21,8 @@ cfg = ConfigQTILE.load_theme(theme_name="azulado")
 
 # FIXME: Arreglar este hardcoding.
 os.system("xrandr --output DP-5 --right-of HDMI-0")
-
+wallpaper = WallpaperManager()
+wallpaper.set_random_wall()
 
 desktops = [
     ["1", "2", "3", "4", "5"],
@@ -34,6 +36,7 @@ groups = get_groups(desktops)
 
 from libqtile.utils import guess_terminal
 from settings.programs import Programs
+# TODO: Meter esto dentro del config.
 programs = Programs(
     terminal = guess_terminal(),
     browser = "brave",
@@ -53,12 +56,13 @@ keys = get_keys(groups, programs)
 
 layouts = get_layouts()
 
-widget_defaults = dict(
+
+cfg_font = ConfigFont(
     font = "HackNerdFont bold",
     fontsize = 15,
-    padding = 10,
+    padding = 10
 )
-extension_defaults = widget_defaults.copy()
+extension_defaults = cfg_font.model_dump()
 
 
 
