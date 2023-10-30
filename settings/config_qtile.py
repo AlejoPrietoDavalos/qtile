@@ -67,4 +67,4 @@ class ConfigQTILE(_ConfigTheme):
     bar: ConfigBar
     screen: ConfigScreen
     groupbox: ConfigGroupBox
-
+    font: ConfigFont

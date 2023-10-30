@@ -57,12 +57,8 @@ keys = get_keys(groups, programs)
 layouts = get_layouts()
 
 
-cfg_font = ConfigFont(
-    font = "HackNerdFont bold",
-    fontsize = 15,
-    padding = 10
-)
-extension_defaults = cfg_font.model_dump()
+
+extension_defaults = cfg.font.model_dump()
 
 
 
