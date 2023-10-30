@@ -62,4 +62,4 @@ class WallpaperManager:
     def set_wall(self, path_wall: Path) -> None:
         """ Settea el wallpaper."""
         self._path_active = path_wall
-        set_wall(self._path_active)
+        set_wall(self.path_active)

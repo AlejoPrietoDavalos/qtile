@@ -10,11 +10,11 @@ def get_widgets(cfg: ConfigQTILE):
     widgets = []
     widgets.extend([
         widget.Spacer(length=bar.STRETCH),
-        widget.GroupBox(**cfg.groupbox.model_dump()),
+        widget.GroupBox(**cfg.groupbox.model_dump(), **cfg.font.model_dump()),
         widget.Spacer(length=bar.STRETCH),
     ])
     widgets.extend([
-        widget.Clock(format=format_clock(), foreground=ColorBar.letter_normal)
+        widget.Clock(format=format_clock(), foreground=ColorBar.letter_normal, **cfg.font.model_dump())
     ])
 
     widgets.extend([

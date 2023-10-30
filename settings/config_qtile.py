@@ -37,11 +37,14 @@ class ConfigFont(BaseModel):
 
 
 
-
 def get_path_theme(theme_name: str) -> Path:
     """ FIXME: Hacer validacion del path y toda la pelota.
     Arreglar el hardcodeo del .json"""
     return path_themes_folder / f"{theme_name}.json"
+
+# TODO: Agregar clase theme. Agregar la configuración predeterminada, tipo, donde
+# van ubicadas las cosas, o el padding y eso aparte. La idea sería que el Theme sean
+# los colores, etc... y como están dispuestos los objetos es lo otro.
 
 class _ConfigTheme(BaseModel):
     theme_name: str

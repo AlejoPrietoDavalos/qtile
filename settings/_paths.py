@@ -1,4 +1,5 @@
 """ Para guardar los paths principales del proyecto.
+TODO: Poner en singleton o una forma de acceder a estos paths directamente.
 
 - IMPORTANTE: El proyecto debe ser clonado dentro de ~/.config.
 """

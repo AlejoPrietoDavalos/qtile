@@ -4,7 +4,7 @@ from libqtile.lazy import lazy
 
 import os
 
-from settings.config_qtile import ConfigQTILE, ConfigFont
+from settings.config_qtile import ConfigQTILE
 from settings.buttons import *
 from settings.shortcuts import get_keys
 from settings.widgets import get_widgets
@@ -55,13 +55,6 @@ programs = Programs(
 keys = get_keys(groups, programs)
 
 layouts = get_layouts()
-
-
-
-extension_defaults = cfg.font.model_dump()
-
-
-
 
 
 n_monitors = 2  # TODO: Ver como mejorar esto.
