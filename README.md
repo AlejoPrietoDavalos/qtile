@@ -14,3 +14,7 @@ Si se rompe algo, podés ver acá el error.
 ```bash
 cat ~/.local/share/qtile/qtile.log
 ```
+
+
+### TODO
+- `betterlockscreen`, pantalla de lockeo?
