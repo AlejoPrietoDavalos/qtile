@@ -1,20 +1,48 @@
 from settings.config_qtile import ConfigQTILE
-from settings.colors import ColorBar    # FIXME
 
-from libqtile import bar, widget
+from libqtile import bar
+from qtile_extras import widget
 
-def format_clock(format: str = None) -> str:
-    return "%d/%m/%Y | %H:%M" if format is None else format
+#from qtile_extras.widget.decorations import PowerLineDecoration, BorderDecoration
+
+
+
+# TODO: Mejorar, estos serían los widgets clickeables.
+from qtile_extras.widget.decorations import RectDecoration
+rect_decoration = {
+    "decorations": [
+        RectDecoration(colour="#197398", radius=10, filled=True, padding_y=4, group=True)
+    ]
+}
+
+
+#powerline = {
+#    "decorations": [
+#        #BorderDecoration(),
+#        RectDecoration(colour="#197398", radius=10, filled=True, padding_y=4, group=True),
+#        #PowerLineDecoration(path="arrow_right")
+#    ]
+#}
+
+
+
+# ----> TODO: Definir una clase estática que se encargue de
+# generar los distintos widgets, haciendo uso del ConfigQTILE.
+
 
 def get_widgets(cfg: ConfigQTILE):
     widgets = []
     widgets.extend([
         widget.Spacer(length=bar.STRETCH),
         widget.GroupBox(**cfg.groupbox.model_dump(), **cfg.font.model_dump()),
-        widget.Spacer(length=bar.STRETCH),
+        widget.Spacer(length=bar.STRETCH)
     ])
     widgets.extend([
-        widget.Clock(format=format_clock(), foreground=ColorBar.letter_normal, **cfg.font.model_dump())
+        widget.Clock(
+            **cfg.clock.model_dump(),
+            **cfg.font.model_dump(),
+            **rect_decoration
+        )
     ])
 
     widgets.extend([

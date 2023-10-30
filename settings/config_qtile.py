@@ -36,6 +36,15 @@ class ConfigFont(BaseModel):
     padding: int
 
 
+#def default_format_clock() -> str:
+#    return "%d/%m/%Y | %H:%M"
+
+
+class ConfigClock(BaseModel):
+    format: str
+    foreground: str
+
+
 
 def get_path_theme(theme_name: str) -> Path:
     """ FIXME: Hacer validacion del path y toda la pelota.
@@ -71,3 +80,4 @@ class ConfigQTILE(_ConfigTheme):
     screen: ConfigScreen
     groupbox: ConfigGroupBox
     font: ConfigFont
+    clock: ConfigClock
