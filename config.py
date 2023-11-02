@@ -40,7 +40,8 @@ from settings.programs import Programs
 programs = Programs(
     terminal = guess_terminal(),
     browser = "brave",
-    browser_incognito = "brave --incognito"
+    browser_incognito = "brave --incognito",
+    run_program = "rofi -show run"
 )
 
 

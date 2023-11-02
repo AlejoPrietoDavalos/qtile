@@ -27,6 +27,6 @@ K_f = "f"
 K_t = "t"
 K_q = "q"
 K_r = "r"
-
+K_d = "d"
 #altgr = "mod5"
 #numlock = "mod2"

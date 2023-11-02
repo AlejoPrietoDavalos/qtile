@@ -7,3 +7,4 @@ class Programs(BaseModel):
     terminal: str
     browser: str
     browser_incognito: str
+    run_program: str
