@@ -12,7 +12,7 @@ cd qtile-extras
 pip install . --break-system-packages
 ```
 
-
+#sudo pacman -Syu discord # Para actualizar discord
 
 ### Archivo .log de qtile
 Si se rompe algo, podés ver acá el error.
@@ -36,3 +36,4 @@ makepkg -si
 cd ..
 # borrar
 ```
+sudo mount /dev/sdb1 /mnt/disco_externo/

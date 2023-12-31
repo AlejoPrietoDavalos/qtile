@@ -1,5 +1,6 @@
 from settings.buttons import *
 from settings.programs import Programs
+from settings._paths import path_root
 
 from libqtile.lazy import lazy
 from libqtile.config import Key, Group
@@ -8,7 +9,7 @@ from typing import List, NewType
 
 Keys = NewType("keys", List[Key])
 Groups = NewType("groups", List[Group])
-
+import time
 
 
 def KP_num(num: str) -> str:
@@ -39,6 +40,10 @@ def focus_window_with_arrows() -> Keys:
     ]
 
 
+def screenshot_keys() -> Keys:
+    return [
+        Key([], "Print", lazy.spawn(f"python3 {path_root / 'wm_screenshot.py'}"))
+    ]
 
 
 def flip_window() -> Keys:
@@ -60,7 +65,6 @@ def resize_window() -> Keys:
         Key([SUPER], K_n, lazy.layout.normalize())
     ]
 
-
 def run_programs(programs: Programs) -> Keys:
     """ TODO: Algunos condicionales, quizás un programa puede ser un objeto de pydantic
     que guarde además el nombre, como ejecutarlo y el shotcut que tiene asociado."""
@@ -78,6 +82,8 @@ def get_keys(groups: Groups, programs: Programs) -> Keys:
     Switch between windows
     """
     keys: Keys = []
+    keys.extend(screenshot_keys())
+    #keys.extend([Key([SUPER], KP_num("7"), lazy.group["7"].toscreen(1))])
     keys.extend(focus_window_with_arrows())
     for g in groups:
         keys.extend(focus_window_with_nums(g.name, g.name))

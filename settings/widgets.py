@@ -33,6 +33,10 @@ rect_decoration = {
 def get_widgets(cfg: ConfigQTILE):
     widgets = []
     widgets.extend([
+        #widget.QuickExit(
+        #    default_text = "Run Script",
+        #    scripts = [(f"Script {i}", f"path/to/script{i}.sh") for i in range(5)]
+        #),
         widget.Spacer(length=bar.STRETCH),
         widget.GroupBox(**cfg.groupbox.model_dump(), **cfg.font.model_dump()),
         widget.Spacer(length=bar.STRETCH)
